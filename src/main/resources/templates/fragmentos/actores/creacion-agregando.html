@@ -1,0 +1,18 @@
+<form th:action="@{/actores/crearAgregarPelicula}" method="POST">
+  <div class="contenedor-form">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre Completo</label>
+      <input type="text" class="form-control" id="nombre" required name="nombre">
+    </div>
+    <div class="mb-3">
+      <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+      <input type="date" class="form-control" id="fechaNacimiento"  name="fechaNacimiento">
+    </div>
+    <div class="mb-3">
+      <label for="fotoUrl" class="form-label">Url de la Foto de Perfil</label>
+      <input type="text" class="form-control" id="fotoUrl"  name="fotoUrl">
+    </div>
+    <input type="hidden" class="form-control" id="idPeliculaCreacionActor" value="" name="peliculaId" >
+    <button type="submit" class="btn btn-primary">Crear Actor</button>
+  </div>
+</form>

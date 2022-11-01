@@ -1,0 +1,12 @@
+<form th:action="@{/actores/agregarPelicula}" method="POST">
+    <div class="list-group" style="height: 55vh; overflow: auto;">
+        <button th:each="actor : ${actores}" type="button" th:attr="onclick=|seleccionarActor('${actor.id}')|" class="list-group-item list-group-item-action d-flex align-items-center" th:id="'list-item-actor-' + ${actor.id}" aria-current="true">
+            <span th:text="${actor.nombre}"></span>
+            <img th:src="${actor.fotoUrl}" width="36" height="36" class="ms-auto" style="object-fit: cover; border-radius: 50%">
+        </button>
+    </div>
+    <input type="hidden" id="actorId" name="actorId" value="" />
+    <input type="hidden" id="peliculaId" name="peliculaId" value="" />
+    <button type="submit" id="buttonAgregarActor" class="btn btn-primary">Agregar a Pelicula</button>
+</form>
+

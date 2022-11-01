@@ -1,0 +1,95 @@
+<div th:fragment="scripts" >
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var eliminacionId = null;
+    var eliminacionPelicula = null;
+    var edicionPelicula = null;
+    var actoresPeliculaSeleccionada = [];
+    let btnBuscar = document.getElementById('button-busqueda');
+    btnBuscar.addEventListener('click', function(e){
+      e.preventDefault();
+      let txt = document.getElementById('txt-busqueda');
+      window.location = '/peliculas/listado/busqueda?q='+txt.value;
+    });
+    var inputBusqueda = document.getElementById("txt-busqueda");
+    inputBusqueda.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        btnBuscar.click();
+      }
+    });
+
+    function eliminarPelicula(id, pelicula) {
+      const modalEliminacion = new bootstrap.Modal('#modalEliminacionPelicula')
+      document.getElementById('mensajeEliminarPelicula').innerHTML = "¿Estás seguro que deseas eliminar '"+pelicula+"'?";
+      document.getElementById('idEliminarPelicula').value = id;
+      modalEliminacion.show();
+    }
+
+    function editarPelicula(id, titulo, sinopsis, fechaEstreno, posterUrl) {
+      const modalEdicion = new bootstrap.Modal('#modalEdicionPelicula')
+      document.getElementById('edicionId').value = id;
+      document.getElementById('edicionTitulo').value = titulo;
+      document.getElementById('edicionSinopsis').value = sinopsis;
+      document.getElementById('edicionFechaEstreno').value = fechaEstreno;
+      document.getElementById('edicionPosterUrl').value = posterUrl;
+      modalEdicion.show();
+    }
+
+    function agregarActor(id, pelicula, actoresActuales) {
+      const modalAgregarActor = new bootstrap.Modal('#modalActoresPelicula')
+      document.getElementById('idPeliculaAgregarActor').value = id;
+      document.getElementById('idPeliculaCreacionActor').value = id;
+      document.getElementById('modalActoresPeliculaLabel').innerHTML = "Agregar Actores a " + pelicula;
+      let todosActores = /*[[${#strings.listJoin(actores.![id], ',')}]]*/
+      todosActoresArr = todosActores.split(',');
+      todosActoresArr.forEach(actorId => {
+        if (actorId) {
+          document.getElementById('list-item-actor-'+actorId).disabled = false;
+        }
+      })
+      let actoresActualesArr = actoresActuales.split(',');
+      actoresActualesArr.forEach(actorId => {
+        if (actorId) {
+          document.getElementById('list-item-actor-'+actorId).disabled = true;
+        }
+      })
+      modalAgregarActor.show();
+    }
+
+    function seleccionarActor(id){
+      document.getElementById('actorId').value = id;
+      document.getElementById('peliculaId').value = document.getElementById('idPeliculaAgregarActor').value;
+      document.getElementById('buttonAgregarActor').disabled = true;
+      console.log(document.getElementsByClassName('list-group-item'));
+      let elementos = document.getElementsByClassName('list-group-item');
+      for (i = 0; i < elementos.length; i++){
+        elementos[i].classList.remove("active");
+      }
+      document.getElementById('list-item-actor-'+id).classList.add("active");
+      document.getElementById('buttonAgregarActor').disabled = false;
+    }
+
+    function quitarActor(actorId, peliculaId, actor, pelicula) {
+      const modalEliminacion = new bootstrap.Modal('#modalEliminacionActorPelicula')
+      document.getElementById('mensajeEliminarActorPelicula').innerHTML = "¿Estás seguro que deseas quitar a '"+actor+"' de '"+pelicula+"'?";
+      document.getElementById('idPeliculaEliminarActor').value = peliculaId;
+      document.getElementById('idActorEliminarActor').value = actorId;
+      modalEliminacion.show();
+    }
+
+    function leerTexto(txt) {
+      if ('speechSynthesis' in window) {
+        var msg = new SpeechSynthesisUtterance();
+        msg.text = txt;
+        window.speechSynthesis.speak(msg);
+      }else{
+        alert("Lectura no disponible!");
+      }
+    }
+
+  /*]]>*/
+  </script>
+  <script src="../../vendor/bootstrap.bundle.min.js"></script>
+</div>

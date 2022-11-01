@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentos/head :: head"></head>
+<body>
+<header th:replace="fragmentos/header :: header"></header>
+<main>
+    <section class="pt-4 pb-2 text-center container">
+        <div class="row py-lg-2">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light" th:text="${titulo}">Listado de Películas</h1>
+                <p class="lead text-muted">A continuación tenemos el listado de peliculas en nuestra colección.</p>
+                <p>
+                    <button href="/peliculas/listado" class="btn btn-primary my-2">Ir al Listado</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalCreacionPelicula" class="btn btn-success my-2">Crear Película</button>
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="py-2" id="listado">
+        <div class="bg-light">
+            <div class="mx-3 px-3 mb-3 row">
+                <div class="col-12 d-inline">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownOrdenar" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ordenar por...
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownOrdenar">
+                            <li><a class="dropdown-item active" href="/peliculas/listado/ultimosEstrenos">Últimos Estrenos</a></li>
+                            <li><a class="dropdown-item" href="/peliculas/listado/masAntiguas">Mas Antiguas</a></li>
+                        </ul>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="txt-busqueda" class="form-control" placeholder="Buscar por titulo..." aria-label="Buscar por titulo..." aria-describedby="button-busqueda">
+                        <button class="btn btn-outline-secondary" type="button" id="button-busqueda">Buscar</button>
+                    </div>
+                    <div th:if="${danger}" class="mt-4 alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>¡Ojo al Tejo!</strong><p th:text="${danger}"></p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div th:if="${success}" class="mt-4 alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>¡Todo Ok!</strong><p th:text="${success}"></p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="mx-3 px-3">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                    <div th:each="pelicula : ${peliculas}">
+                        <div th:replace="fragmentos/peliculas/card-listado"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="fragmentos/peliculas/modal-edicion"></div>
+<div th:replace="fragmentos/peliculas/modal-creacion"></div>
+<div th:replace="fragmentos/peliculas/modal-eliminacion"></div>
+<div th:replace="fragmentos/peliculas/modal-eliminacion-actor"></div>
+<div th:replace="fragmentos/peliculas/modal-actores"></div>
+<div th:replace="fragmentos/scripts :: scripts"></div>
+</body>
+</html>

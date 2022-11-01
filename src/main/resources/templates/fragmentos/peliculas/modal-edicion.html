@@ -1,0 +1,36 @@
+<!-- Modal -->
+<div class="modal fade" id="modalEdicionPelicula" tabindex="-1" aria-labelledby="modalEdicionPeliculaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEdicionPeliculaLabel">Editar Película</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form th:object="${nuevaPelicula}" th:action="@{/peliculas/editar}" method="POST">
+        <div class="modal-body">
+          <input type="hidden" class="form-control" id="edicionId" th:field="*{id}" required>
+          <div class="mb-3">
+            <label for="edicionTitulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="edicionTitulo" th:field="*{titulo}" required>
+          </div>
+          <div class="mb-3">
+            <label for="edicionSinopsis" class="form-label">Sinopsis</label>
+            <textarea class="form-control" id="edicionSinopsis" th:field="*{sinopsis}" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="edicionFechaEstreno" class="form-label">Fecha de Estreno</label>
+            <input type="date" class="form-control" id="edicionFechaEstreno" th:field="*{fechaEstreno}">
+          </div>
+          <div class="mb-3">
+            <label for="edicionPosterUrl" class="form-label">Url del Poster</label>
+            <input type="text" class="form-control" id="edicionPosterUrl" th:field="*{posterUrl}" >
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Editar Pelicula</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

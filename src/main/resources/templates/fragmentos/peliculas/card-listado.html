@@ -1,0 +1,52 @@
+<div class="col">
+    <div class="card shadow-sm">
+        <div class="d-flex justify-content-center" style="z-index: 1">
+            <div th:style="'background-image: url('+${pelicula.posterUrl}+')'" class="bd-placeholder-img-bg"></div>
+            <img class="bd-placeholder-img card-img-top shadow" th:src="${pelicula.posterUrl}" />
+        </div>
+        <div class="card-body">
+            <h3 class="text-center" th:text="${pelicula.titulo}"></h3>
+            <p class="card-text text-justify" th:text="${pelicula.sinopsis}"></p>
+            <div th:if="${pelicula?.listaActores}">
+                <p class="fw-bold mb-0">Actores:</p>
+                <ul class="ps-0">
+                    <li th:each="actor : ${pelicula.listaActores}" class="d-flex align-items-center rounded my-1">
+                        <img th:src="${actor.fotoUrl}" width="30px" height="30px" class="me-2 rounded-circle" style="object-fit: cover"  /> <span class="px-1" th:text="${actor.nombre}"></span><button th:attr="onclick=|quitarActor('${actor.id}', '${pelicula.id}', '${actor.nombre}','${pelicula.titulo}')|" class="rounded-circle btn btn-danger" style="--bs-btn-padding-y: .05rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .5rem;">X</button>
+                    </li>
+                    <li class="d-flex align-items-center rounded my-1 fw-bold fst-italic" style="cursor: pointer" th:attr="onclick=|agregarActor('${pelicula.id}', '${pelicula.titulo}', '${#strings.listJoin(pelicula.listaActores.![id], ',')}')|">
+                        <img src="/img/mas.png" width="30px" height="30px" class="me-2 rounded-circle" /> <span class="px-1" >Agregar Actor</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-primary" th:attr="onclick=|editarPelicula('${pelicula.id}', '${pelicula.titulo}', '${pelicula.sinopsis}', '${pelicula.fechaEstreno}', '${pelicula.posterUrl}')|">Editar</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" th:attr="onclick=|eliminarPelicula('${pelicula.id}', '${pelicula.titulo}')|">Eliminar</button>
+                </div>
+                <small class="text-muted" th:text="${#dates.format(new java.util.Date(pelicula.fechaEstreno), 'dd/MM/yyyy')}"></small>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .bd-placeholder-img {
+        object-fit: contain;
+        background: #000;
+        height: 225px;
+        width: auto;
+        z-index: 999;
+        border-radius: 15px;
+        height: 275px;
+        margin-top:25px;
+    }
+    .bd-placeholder-img-bg {
+        position:absolute;
+        top: 0;
+        z-index: -1;
+        height: 225px;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        filter: blur(2px) brightness(0.4);
+    }
+</style>
